@@ -1,0 +1,78 @@
+[gd_scene load_steps=10 format=3 uid="uid://bwsmdcykiegns"]
+
+[ext_resource type="Script" path="res://SimBeginScene.cs" id="1_0aqoo"]
+[ext_resource type="PackedScene" uid="uid://dgxwvehspcn4u" path="res://Models381/SpringModel.tscn" id="2_2b63v"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x6nwx"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_iu4ny"]
+sky_material = SubResource("ProceduralSkyMaterial_x6nwx")
+
+[sub_resource type="Environment" id="Environment_mqgm8"]
+background_mode = 2
+sky = SubResource("Sky_iu4ny")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o4fk5"]
+albedo_color = Color(1, 0, 0, 1)
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_00n0m"]
+material = SubResource("StandardMaterial3D_o4fk5")
+size = Vector2(4, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ij2rt"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="SphereMesh" id="SphereMesh_mvufa"]
+radius = 0.1
+height = 0.2
+
+[node name="SimBeginScene" type="Node3D"]
+script = ExtResource("1_0aqoo")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0.407458, -0.321397, 0.8548, -0.28979, 0.842143, 0.454772, 0, 2.27926, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mqgm8")
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.76837e-07, 0)
+mesh = SubResource("PlaneMesh_00n0m")
+
+[node name="Anchor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.61658, 0)
+mesh = SubResource("BoxMesh_ij2rt")
+
+[node name="Ball1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.140022, 0.418284, -0.183522)
+mesh = SubResource("SphereMesh_mvufa")
+
+[node name="SpringModel" parent="." instance=ExtResource("2_2b63v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.04374, 0.0280373)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.967316, 0.0118196, 0.253297, -0.0352667, 0.995476, 0.088228, -0.251108, -0.0942773, 0.963357, 0.728967, 1.11193, 2.64974)
+
+[node name="KELabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Potential Energy - 
+"
+
+[node name="PELabel" type="Label" parent="."]
+offset_left = -2.0
+offset_top = 33.0
+offset_right = 40.0
+offset_bottom = 86.0
+text = "Kinetic Energy - "
+
+[node name="TELabel" type="Label" parent="."]
+offset_top = 74.0
+offset_right = 40.0
+offset_bottom = 122.0
+text = "Total Energy - "
